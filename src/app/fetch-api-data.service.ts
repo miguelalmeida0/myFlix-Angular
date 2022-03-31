@@ -16,7 +16,7 @@
       providedIn: 'root'
     })
 
-    export class FetchApiDataService {
+    export class UserRegistrationService {
       constructor(private http: HttpClient, private router: Router) {
       }
 
@@ -116,7 +116,7 @@
     // This will send back the favorite movies component.
 
     getFavoriteMovies(username: any): Observable<any> {
-      const token = localStorage.getitem('token');
+      const token = localStorage.getItem('token');
       return this.http.get(apiUrl + `users/${username}`, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
@@ -131,7 +131,7 @@
 
     addFavoriteMovie(movieId: any): Observable<any> {
       const token = localStorage.getItem('token');
-      const username = localStorage.getitem('username');
+      const username = localStorage.getItem('username');
       return this.http.post(apiUrl + `users/${username}/movies/${movieId}`, null, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
@@ -175,7 +175,7 @@
     // This will delete a user favorite movie.
 
     deleteFavoriteMovie( movieId: any): Observable<any> {
-      const token = localStorage.getitem('token');
+      const token = localStorage.getItem('token');
       const username = localStorage.getItem('username');
       return this.http.delete(
         apiUrl + `users/${username}/movies/${movieId}`, {
