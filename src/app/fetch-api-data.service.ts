@@ -16,7 +16,7 @@
       providedIn: 'root'
     })
 
-    export class UserRegistrationService {
+    export class FetchApiDataService {
       constructor(private http: HttpClient, private router: Router) {
       }
 
@@ -71,7 +71,7 @@
 
     // This will get the movie director name.
 
-    getDIrector(): Observable<any> {
+    getDirector(): Observable<any> {
       const token = localStorage.getItem('token');
       return this.http.get(apiUrl + 'directors/:name', {
         headers: new HttpHeaders({
@@ -101,7 +101,22 @@
 
     // This will get to the user profile.
 
-    getUserProfile(username: any): Observable<any> {
+    getUserProfile(): Observable<any> {
+      const token = localStorage.getItem('token');
+      const UserID = localStorage.getItem('UserID');
+      return this.http
+        .get(apiUrl + `users/${UserID}`, {
+          headers: new HttpHeaders({
+            Authorization: 'Bearer ' + token,
+          }),
+        })
+        .pipe(map(this.extractResponseData), catchError(this.handleError));
+    }
+
+
+    // This will send back the favourite movies component.
+
+    getFavouriteMovies(username: any): Observable<any> {
       const token = localStorage.getItem('token');
       return this.http.get(apiUrl + `users/${username}`, {
         headers: new HttpHeaders({
@@ -113,23 +128,9 @@
     }
 
 
-    // This will send back the favorite movies component.
+    // This will add a favourite movie to the user movie list.
 
-    getFavoriteMovies(username: any): Observable<any> {
-      const token = localStorage.getItem('token');
-      return this.http.get(apiUrl + `users/${username}`, {
-        headers: new HttpHeaders({
-          Authorization: 'Bearer ' + token,
-        }),
-      }).pipe(
-        map(this.extractResponseData), catchError(this.handleError)
-      );
-    }
-
-
-    // This will add a favorite movie to the user movie list.
-
-    addFavoriteMovie(movieId: any): Observable<any> {
+    addFavouriteMovie(movieId: any): Observable<any> {
       const token = localStorage.getItem('token');
       const username = localStorage.getItem('username');
       return this.http.post(apiUrl + `users/${username}/movies/${movieId}`, null, {
@@ -142,12 +143,12 @@
     }
 
 
-    // This will edit a user favorite profile.
+    // This will edit a user favourite profile.
 
-    editUserProfile(userCredentials: object): Observable<any> {
+    editUserProfile(userData: object): Observable<any> {
       const token = localStorage.getItem('token');
       const username = localStorage.getItem('username');
-      return this.http.put(apiUrl + `users/${username}`, userCredentials, {
+      return this.http.put(apiUrl + `users/${username}`, userData, {
         headers: new HttpHeaders({
           Authorization: 'Bearer ' + token,
         }),
@@ -172,9 +173,9 @@
       );
     }
 
-    // This will delete a user favorite movie.
+    // This will delete a user favourite movie.
 
-    deleteFavoriteMovie( movieId: any): Observable<any> {
+    deleteFavouriteMovie( movieId: any): Observable<any> {
       const token = localStorage.getItem('token');
       const username = localStorage.getItem('username');
       return this.http.delete(

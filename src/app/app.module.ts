@@ -14,12 +14,39 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { GenreViewComponent } from './genre-view/genre-view.component';
+import { DirectorViewComponent } from './director-view/director-view.component';
+import { UserPageComponent } from './user-page/user-page.component';
+import { UserFavouritesComponent } from './user-favourites/user-favourites.component';
+import { RouterModule, Routes } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+
+
+// adding modules to imports array of main module
+
+// defining routes
+const appRoutes: Routes = [
+  { path: 'welcome', component: WelcomePageComponent},
+  { path: 'movies', component: MovieCardComponent},
+  { path: 'profile', component: UserPageComponent },
+  { path: 'my-list', component: UserFavouritesComponent},
+  { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
+];
+
 
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationFormComponent,
-    UserLoginFormComponent
+    UserLoginFormComponent,
+    MovieCardComponent,
+    WelcomePageComponent,
+    GenreViewComponent,
+    DirectorViewComponent,
+    UserPageComponent,
+    UserFavouritesComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,7 +59,9 @@ import { UserLoginFormComponent } from './user-login-form/user-login-form.compon
     MatFormFieldModule,
     MatDialogModule,
     MatSnackBarModule,
-    FormsModule
+    FormsModule,
+    MatIconModule, MatIconModule,
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]

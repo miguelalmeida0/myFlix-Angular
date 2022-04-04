@@ -4,7 +4,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 // brings in the API calls
-import { UserRegistrationService } from '../fetch-api-data.service';
+import { FetchApiDataService } from '../fetch-api-data.service';
+
+
+import { Router } from '@angular/router';
+
 
 // displays notifications back to the user
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,24 +19,26 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./user-login-form.component.scss'],
 })
 export class UserLoginFormComponent implements OnInit {
-  @Input() userCredentials = { Username: '', Password: '' };
+  @Input() userData = { username: '', password: '' };
 
   constructor(
-    public fetchApiData: UserRegistrationService,
+    public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
-    public snackBar: MatSnackBar
+    public snackBar: MatSnackBar,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {}
 
   loginUser(): void {
-    this.fetchApiData.userLogin(this.userCredentials).subscribe(
+    this.fetchApiData.userLogin(this.userData).subscribe(
       (response) => {
         this.dialogRef.close();
         console.log(response);
         this.snackBar.open('user has logged in', 'OK', {
           duration: 2000,
         });
+        this.router.navigate(['movies']);
       },
       (response) => {
         this.snackBar.open(response, 'OK', {
