@@ -19,7 +19,6 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { GenreViewComponent } from './genre-view/genre-view.component';
 import { DirectorViewComponent } from './director-view/director-view.component';
 import { SynopsisCardComponent } from './synopsis-card/synopsis-card.component';
-import { UserFavouritesComponent } from './user-favourites/user-favourites.component';
 import { ProfileViewComponent } from './profile-view/profile-view.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -32,7 +31,6 @@ import { MatIconModule } from '@angular/material/icon';
 const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent},
   { path: 'movies', component: MovieCardComponent},
-  { path: 'my-list', component: UserFavouritesComponent},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
