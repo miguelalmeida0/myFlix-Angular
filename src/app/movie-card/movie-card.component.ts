@@ -14,6 +14,7 @@ import { DirectorViewComponent } from '../director-view/director-view.component'
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent implements OnInit {
+  user: any = localStorage.getItem('user');
   movies: any[] = [];
   genres: any[] = [];
   favouriteMovies: any [] = [];
@@ -27,35 +28,30 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
-    this.getGenre();
     this.getFavouriteMovies();
   }
 
 getMovies(): void {
-  this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+  this.fetchApiData.getMovies().subscribe((resp: any) => {
       this.movies = resp;
       console.log(this.movies);
       return this.movies;
     });
   }
 
-  getGenre(): void {
-    this.fetchApiData.getGenre().subscribe((resp: any) => {
-        this.genres = resp;
-        console.log(this.genres);
-        return this.genres;
-      });
+  openGenreDialog(name: string, description: string): void {
+    this.dialog.open(GenreViewComponent, {
+      panelClass: 'custom-dialog-container',
+      data: { name, description },
+      width: '500px'
+    });
   }
 
-  openDirector(name: string, bio: string, birthdate: Date): void {
-    this.dialog.open(DirectorViewComponent, {
-      data: {
-        Name: name,
-        Bio: bio,
-        Birthday: birthdate,
-      },
+  openDirectorDialog(name: string, bio: string): void {
+    this.dialog.open(DirectorViewComponent , {
+      panelClass: 'custom-dialog-container',
+      data: {name, bio},
       width: '500px',
-      backdropClass: 'backdropBackground'
     });
   }
 
@@ -66,8 +62,8 @@ getMovies(): void {
     });
   }
 
-  addFavouriteMovie(MovieID: string, title: string): void {
-    this.fetchApiData.addFavouriteMovie(MovieID).subscribe((resp: any) => {
+  addFavouriteMovie(movieId: string, title: string): void {
+    this.fetchApiData.addFavouriteMovie(movieId).subscribe((resp: any) => {
       this.snackBar.open(`${title} has been added to your favourites!`, 'OK', {
         duration: 3000,
       });
@@ -76,8 +72,8 @@ getMovies(): void {
     return this.getFavouriteMovies();
   }
 
-  removeFavouriteMovie(MovieID: string, title: string): void {
-    this.fetchApiData.deleteFavouriteMovie(MovieID).subscribe((resp: any) => {
+  removeFavouriteMovie(movieId: string, title: string): void {
+    this.fetchApiData.deleteFavouriteMovie(movieId).subscribe((resp: any) => {
       console.log(resp);
       this.snackBar.open(
         `${title} has been removed from your favourites!`,

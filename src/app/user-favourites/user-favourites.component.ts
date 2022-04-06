@@ -56,7 +56,7 @@ export class UserFavouritesComponent implements OnInit {
    * @returns an updated favouriteMovies array
    */
    getFavouriteMovies(): void {
-    this.fetchApiData.getAllMovies().subscribe((res: any) => {
+    this.fetchApiData.getMovies().subscribe((res: any) => {
       this.favouriteMovies = res.filter((movie: any) => {
         return this.user.FavouriteMovies.includes(movie._id)
       });
@@ -73,7 +73,7 @@ export class UserFavouritesComponent implements OnInit {
    * @param title the title of the movie chosen by the user
    * @returns the function getFavouriteMovies() 
    */
-   removeFavouriteMovie(movieId: string, title: string): void {
+   deleteFavouriteMovie(movieId: string, title: string): void {
     this.fetchApiData.deleteFavouriteMovie(movieId).subscribe((resp: any) => {
       console.log(resp);
       this.snackBar.open(
