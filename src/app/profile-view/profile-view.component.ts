@@ -34,7 +34,7 @@ export class ProfileViewComponent implements OnInit {
     
     // this.getFavoriteMovies()
     this.getUser();
-    this.getFavorites()  
+    this.getFavoriteMovies()  
   }
   
   openSynopsis(title: string, imagePath: any, description: string): void {
@@ -48,6 +48,13 @@ export class ProfileViewComponent implements OnInit {
     });
    
   }
+
+  openEditUserProfile(): void {
+    this.dialog.open(UserEditComponent, {
+      width: '500px'
+    });
+  }
+  
   openDirectorDialog(name: string, bio: string, birth: string): void {
     this.dialog.open(DirectorViewComponent, {
       data: {Name: name, Bio: bio, Birth: birth},
@@ -74,14 +81,8 @@ export class ProfileViewComponent implements OnInit {
       });
     }
   }
-  
-  openEditUserProfile(): void {
-    this.dialog.open(UserEditComponent, {
-      width: '500px'
-    });
-  }
-  
-  getFavorites(): void {
+    
+  getFavoriteMovies(): void {
     let movies: any[] = [];
     this.fetchApiData.getMovies().subscribe((res: any) => {
       movies = res;
@@ -93,6 +94,7 @@ export class ProfileViewComponent implements OnInit {
         });
       
     });
+    
     
    
   }

@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { UserLoginFormComponent } from './user-login-form/user-login-form.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { GenreViewComponent } from './genre-view/genre-view.component';
@@ -32,6 +33,7 @@ const appRoutes: Routes = [
   { path: 'welcome', component: WelcomePageComponent},
   { path: 'movies', component: MovieCardComponent},
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
+  { path: 'profile', component: ProfileViewComponent }
 ];
 
 
@@ -40,6 +42,7 @@ const appRoutes: Routes = [
     AppComponent,
     UserRegistrationFormComponent,
     UserLoginFormComponent,
+    NavbarComponent,
     MovieCardComponent,
     WelcomePageComponent,
     GenreViewComponent,

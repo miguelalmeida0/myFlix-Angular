@@ -31,20 +31,21 @@ export class UserLoginFormComponent implements OnInit {
   ngOnInit(): void {}
 
   loginUser(): void {
-    this.fetchApiData.userLogin(this.userData).subscribe(
-      (response) => {
-        this.dialogRef.close();
-        console.log(response);
-        this.snackBar.open('user has logged in', 'OK', {
-          duration: 2000,
-        });
-        this.router.navigate(['movies']);
-      },
-      (response) => {
-        this.snackBar.open(response, 'OK', {
-          duration: 2000,
-        });
-      }
-    );
+    this.fetchApiData.userLogin(this.userData).subscribe((result) => {
+ 
+    this.dialogRef.close(); // This will close the modal on success!
+    console.log(result)
+    localStorage.setItem('user', result.user.username);
+      localStorage.setItem('token', result.token);
+    this.snackBar.open('logged in successfully', 'OK', {
+        duration: 2000
+    });
+    this.router.navigate(['movies']);
+    }, (result) => {
+      console.log(result)
+      this.snackBar.open(result, 'OK', {
+        duration: 2000
+      });
+    });
   }
 }

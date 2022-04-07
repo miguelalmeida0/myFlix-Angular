@@ -1,25 +1,50 @@
-<div style="display: flex;">
-  <mat-card *ngFor="let movie of movies;" style="flex: 1 1 auto;">
+<app-navbar></app-navbar>
+<div class="movie-card" style="display: flex">
+  <mat-card *ngFor="let movie of movies; let i = index">
+    <mat-dialog-content class="">
+      <mat-card-title>{{ movie.Title }}</mat-card-title>
+      <div class="img-container">
+        <mat-card-subtitle
+          ><img src="{{ movie.ImagePath }}"
+        /></mat-card-subtitle>
+      </div>
       <mat-card-header>
-      <mat-card-title>{{movie.Title}}</mat-card-title>
-          <mat-card-subtitle>Directed by: {{movie.Director.Name}}</mat-card-subtitle>
+        <button
+          class="director-button"
+          mat-button
+          color="grey"
+          (click)="
+            openDirectorDialog(
+              movie.Director.Name,
+              movie.Director.Bio)
+          "
+        >
+          Director Details
+        </button>
+
+        <button
+          class="genre-button"
+          mat-button
+          color="grey"
+          (click)="openGenreDialog(movie.Genre.Name, movie.Genre.Description)"
+        >
+          Genre Details
+        </button>
+        <button
+          class="synopsis-button"
+          mat-button
+          color="grey"
+          (click)="
+            openSynopsis(movie.Title, movie.ImagePath, movie.Description)
+          "
+        >
+          Synopsis
+        </button>
+
+        <button mat-button (click)="addFavouriteMovie(movie._id)">
+          Add Movie To Favourites
+        </button>
       </mat-card-header>
-      <img src={{movie.ImagePath}} alt= {{movie.Title}} />
-      <mat-card-actions>
-          <button
-              mat-button
-              color="primary"
-          >
-              Genre
-          </button>
-          <button
-              mat-button
-              color="primary"
-          >
-              Director
-          </button>
-     
-          <mat-icon>favorite_border</mat-icon>
-      </mat-card-actions>
+    </mat-dialog-content>
   </mat-card>
 </div>

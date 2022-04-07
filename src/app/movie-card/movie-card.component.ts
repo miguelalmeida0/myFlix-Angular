@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GenreViewComponent } from '../genre-view/genre-view.component';
 import { DirectorViewComponent } from '../director-view/director-view.component';
+import { SynopsisCardComponent } from '../synopsis-card/synopsis-card.component';
 
 
 
@@ -14,7 +15,8 @@ import { DirectorViewComponent } from '../director-view/director-view.component'
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent implements OnInit {
-  user: any = localStorage.getItem('user');
+  user: any = {};
+  username: any = localStorage.getItem('user');
   movies: any[] = [];
   genres: any[] = [];
   favouriteMovies: any [] = [];
@@ -28,7 +30,7 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
-    this.getFavouriteMovies();
+    
   }
 
 getMovies(): void {
@@ -39,10 +41,38 @@ getMovies(): void {
     });
   }
 
+  getCurrentUser(): void {
+    const username = localStorage.getItem('user');
+    this.fetchApiData.getUser(username).subscribe((resp: any) => {
+       
+     console.log(resp)
+      const currentUser=resp.username
+      console.log(currentUser)
+      const currentFavs=resp.FavouriteMovies
+      console.log(currentFavs)
+
+    });
+  }
+
+  openSynopsis(title: string, imagePath: any, description: string): void {
+    this.dialog.open(SynopsisCardComponent, {
+      data: {
+        Title: title,
+        ImagePath: imagePath,
+        Description: description,
+      },
+      width: '500px'
+    });
+   
+  }
+
   openGenreDialog(name: string, description: string): void {
     this.dialog.open(GenreViewComponent, {
       panelClass: 'custom-dialog-container',
-      data: { name, description },
+      data: {
+        Name: name,
+        Description: description,
+      },
       width: '500px'
     });
   }
@@ -50,27 +80,21 @@ getMovies(): void {
   openDirectorDialog(name: string, bio: string): void {
     this.dialog.open(DirectorViewComponent , {
       panelClass: 'custom-dialog-container',
-      data: {name, bio},
+      data: {Name: name, Bio: bio },
       width: '500px',
     });
   }
 
-  getFavouriteMovies(): void {
-    this.fetchApiData.getUserProfile().subscribe((resp: any) => {
-      this.favouriteMovies = resp.FavouriteMovies;
-      console.log(this.favouriteMovies);
+  addFavouriteMovie(id: string): void {
+    console.log(id);
+    const token = localStorage.getItem('token');
+    console.log(token)
+    this.fetchApiData.addFavouriteMovie(id).subscribe((response: any) => {
+      console.log(response);
+      this.ngOnInit();
     });
   }
 
-  addFavouriteMovie(movieId: string, title: string): void {
-    this.fetchApiData.addFavouriteMovie(movieId).subscribe((resp: any) => {
-      this.snackBar.open(`${title} has been added to your favourites!`, 'OK', {
-        duration: 3000,
-      });
-      this.ngOnInit();
-    });
-    return this.getFavouriteMovies();
-  }
 
   removeFavouriteMovie(movieId: string, title: string): void {
     this.fetchApiData.deleteFavouriteMovie(movieId).subscribe((resp: any) => {
@@ -84,6 +108,6 @@ getMovies(): void {
       );
       this.ngOnInit();
     });
-    return this.getFavouriteMovies();
+ 
   }
 }

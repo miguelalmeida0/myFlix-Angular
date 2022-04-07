@@ -17,7 +17,6 @@ export class UserEditComponent implements OnInit {
     username: this.user.username,
     password: this.user.password,
     email: this.user.email,
-    birthday: this.user.birthday
   }
 
   constructor(

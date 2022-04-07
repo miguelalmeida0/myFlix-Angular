@@ -1,4 +1,4 @@
 {
-  "entryPoints": ["src/app/director-view/director-view.component.ts"],
+  "entryPoints": ["src/app/"],
   "out": "docs"
 }
