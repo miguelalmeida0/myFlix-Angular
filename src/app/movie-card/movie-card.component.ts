@@ -19,7 +19,7 @@ export class MovieCardComponent implements OnInit {
   username: any = localStorage.getItem('user');
   movies: any[] = [];
   genres: any[] = [];
-  favouriteMovies: any [] = [];
+  FavMovie: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -30,6 +30,7 @@ export class MovieCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMovies();
+    this.showFavMovie();
     
   }
 
@@ -51,6 +52,46 @@ getMovies(): void {
       const currentFavs=resp.FavouriteMovies
       console.log(currentFavs)
 
+    });
+  }
+
+  showFavMovie(): void {
+    const user = localStorage.getItem('user');
+    this.fetchApiData.getUser(user).subscribe((resp: any) => {
+      this.FavMovie = resp.FavoriteMovies;
+      return this.FavMovie;
+    });
+  }
+
+  addFavouriteMovie(movieId: string, Title: string): void {
+    this.fetchApiData.addFavouriteMovie(this.user.username, movieId).subscribe((resp: any) => {
+      console.log(resp);
+      this.snackBar.open(`${Title} has been added to your favorites.`, 'OK', {
+      duration: 3000,
+    });
+    this.showFavMovie();
+    });
+  }
+
+  setAsFavourite(movie: any): void {
+    this.isFavourite(movie._id)
+      ? this.deleteFavouriteMovie(movie._id, movie.Title)
+      : this.addFavouriteMovie(movie._id, movie.Title);
+  }
+
+  isFavourite(movieId: string): boolean {
+    console.log(movieId);
+    console.log('FavouriteMovie list', this.FavMovie);
+    return this.FavMovie.some((id) => id === movieId);
+  }
+
+  deleteFavouriteMovie(movieId: string, Title: string): void {
+    this.fetchApiData.deleteFavouriteMovie(this.user.username, movieId).subscribe((resp: any) => {
+      console.log(resp);
+      this.snackBar.open(`${Title} is no longer a favourite of yours!.`, 'OK', {
+        duration: 3000,
+      });
+      this.showFavMovie();
     });
   }
 
@@ -84,30 +125,5 @@ getMovies(): void {
       width: '500px',
     });
   }
-
-  addFavouriteMovie(id: string): void {
-    console.log(id);
-    const token = localStorage.getItem('token');
-    console.log(token)
-    this.fetchApiData.addFavouriteMovie(id).subscribe((response: any) => {
-      console.log(response);
-      this.ngOnInit();
-    });
   }
 
-
-  removeFavouriteMovie(movieId: string, title: string): void {
-    this.fetchApiData.deleteFavouriteMovie(movieId).subscribe((resp: any) => {
-      console.log(resp);
-      this.snackBar.open(
-        `${title} has been removed from your favourites!`,
-        'OK',
-        {
-          duration: 3000,
-        }
-      );
-      this.ngOnInit();
-    });
- 
-  }
-}

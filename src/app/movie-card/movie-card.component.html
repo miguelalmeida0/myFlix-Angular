@@ -41,9 +41,10 @@
           Synopsis
         </button>
 
-        <button mat-button (click)="addFavouriteMovie(movie._id)">
-          Add Movie To Favourites
-        </button>
+        <button mat-icon-button color="warn" (click)="setAsFavourite(movie)">
+          <mat-icon *ngIf="isFavourite(movie._id)">favorite</mat-icon>
+          <mat-icon *ngIf="!isFavourite(movie._id)">favorite_border</mat-icon>
+      </button>
       </mat-card-header>
     </mat-dialog-content>
   </mat-card>

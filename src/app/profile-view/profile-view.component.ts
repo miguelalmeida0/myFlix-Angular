@@ -19,7 +19,7 @@ export class ProfileViewComponent implements OnInit {
   movies: any[] = [];
   userName: any = localStorage.getItem('user');
   favourites: any = null;
-  favouriteMovies: any[] = [];
+  FavMovie: any = [];
   displayElement: boolean = false
 
   constructor(
@@ -34,7 +34,7 @@ export class ProfileViewComponent implements OnInit {
     
     // this.getFavoriteMovies()
     this.getUser();
-    this.getFavoriteMovies()  
+    this.getFavMovie()  
   }
   
   openSynopsis(title: string, imagePath: any, description: string): void {
@@ -82,21 +82,33 @@ export class ProfileViewComponent implements OnInit {
     }
   }
     
-  getFavoriteMovies(): void {
-    let movies: any[] = [];
-    this.fetchApiData.getMovies().subscribe((res: any) => {
-      movies = res;
-      movies.forEach((movie: any) => {
-        if (this.user.FavouriteMovies.includes(movie._id)) {
-          this.favouriteMovies.push(movie);
-          this.displayElement = true;
+  getFavMovie(): void {
+    this.fetchApiData.getMovies().subscribe((resp: any) => {
+      this.movies = resp;
+      this.movies.forEach((movie: any) => {
+        if (this.user.FavoriteMovies.includes(movie._id)) {
+          this.FavMovie.push(movie);
         }
-        });
-      
+      });
     });
+    console.log(this.FavMovie);
   }
   
-         
+  removeFavMovie(movieId: string, Title: string): void {
+    this.fetchApiData.deleteFavouriteMovie(this.user.username, movieId).subscribe((resp) => {
+      console.log(resp);
+      this.snackBar.open(
+        `${Title} is no longer favorited`,
+        'OK',
+        {
+          duration: 1000,
+        }
+      );
+      setTimeout(function () {
+        window.location.reload();
+      }, 1000);
+    });
+  }     
 
   //Delete User account
  
@@ -112,13 +124,5 @@ export class ProfileViewComponent implements OnInit {
     }
   
   }
-  removeFavourite(id: string): void {
-    this.fetchApiData.deleteFavouriteMovie(id).subscribe((res: any) => {
-      this.snackBar.open('Successfully removed from favorite movies.', 'OK', {
-        duration: 2000,
-      });
-      this.ngOnInit();
-      return this.favourites;
-    })
-  }
+
 }

@@ -37,7 +37,7 @@
   <div class="moviebox">
     <div *ngIf="displayElement; else message">
       <h2>Favourite movies</h2>
-      <mat-card *ngFor="let movie of favouriteMovies; let i = index">
+      <mat-card *ngFor="let movie of FavMovie">
         <mat-dialog-content>
           <mat-card-title>{{ movie.title }}</mat-card-title>
           <mat-card-subtitle
@@ -83,7 +83,7 @@
               class="delete-button"
               mat-button
               color="grey"
-              (click)="removeFavourite(movie._id)"
+              (click)="removeFavMovie(movie._id, movie.Title)"
             >
               Delete Favorite Movie
             </button>
