@@ -36,6 +36,16 @@ export class ProfileViewComponent implements OnInit {
     this.getUser();
     this.getFavMovie()  
   }
+
+  getUser(): void {
+    const user = localStorage.getItem('user');
+    if (user) {
+      this.fetchApiData.getUser(user).subscribe((resp: any) => {
+        this.user = resp;
+        console.log(this.user);
+      });
+    }
+  }
   
   openSynopsis(title: string, imagePath: any, description: string): void {
     this.dialog.open(SynopsisCardComponent, {
@@ -72,15 +82,7 @@ export class ProfileViewComponent implements OnInit {
     });
   }
 
-  getUser(): void {
-    const user = localStorage.getItem('user');
-    if (user) {
-      this.fetchApiData.getUser(user).subscribe((resp: any) => {
-        this.user = resp;
-        console.log(this.user);
-      });
-    }
-  }
+
     
   getFavMovie(): void {
     this.fetchApiData.getMovies().subscribe((resp: any) => {

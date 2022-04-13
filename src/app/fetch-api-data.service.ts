@@ -138,7 +138,7 @@
         public getFavMovie(movieId: string): Observable<any> {
           const token = localStorage.getItem('token');
           //no GET request for this endpoint previously made in API; was used for PUSH request
-          return this.http.get(apiUrl + `users/${username}/movies/${movieId}`, {headers: new HttpHeaders(
+          return this.http.get(apiUrl + `users/:username/movies/${movieId}`, {headers: new HttpHeaders(
             {
               Authorization: 'Bearer ' + token,
             })}).pipe(

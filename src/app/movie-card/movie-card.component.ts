@@ -20,6 +20,7 @@ export class MovieCardComponent implements OnInit {
   movies: any[] = [];
   genres: any[] = [];
   FavMovie: any[] = [];
+  
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -41,6 +42,7 @@ getMovies(): void {
       return this.movies;
     });
   }
+  
 
   getCurrentUser(): void {
     const username = localStorage.getItem('user');
@@ -49,7 +51,7 @@ getMovies(): void {
      console.log(resp)
       const currentUser=resp.username
       console.log(currentUser)
-      const currentFavs=resp.FavouriteMovies
+      const currentFavs=resp.FavoriteMovies
       console.log(currentFavs)
 
     });
@@ -66,7 +68,7 @@ getMovies(): void {
   addFavouriteMovie(movieId: string, Title: string): void {
     this.fetchApiData.addFavouriteMovie(this.user.username, movieId).subscribe((resp: any) => {
       console.log(resp);
-      this.snackBar.open(`${Title} has been added to your favorites.`, 'OK', {
+      this.snackBar.open(`${Title} has been added to your favourites!`, 'OK', {
       duration: 3000,
     });
     this.showFavMovie();
@@ -88,7 +90,7 @@ getMovies(): void {
   deleteFavouriteMovie(movieId: string, Title: string): void {
     this.fetchApiData.deleteFavouriteMovie(this.user.username, movieId).subscribe((resp: any) => {
       console.log(resp);
-      this.snackBar.open(`${Title} is no longer a favourite of yours!.`, 'OK', {
+      this.snackBar.open(`${Title} is no longer a favourite of yours!`, 'OK', {
         duration: 3000,
       });
       this.showFavMovie();

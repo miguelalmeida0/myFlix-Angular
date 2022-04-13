@@ -44,7 +44,7 @@ export class UserEditComponent implements OnInit {
       this.dialogRef.close();
       localStorage.setItem('user', resp.username);
       this.snackBar.open('Your profile was updated successfully.', 'OK', {
-        duration: 2000
+        duration: 4000
       });
       setTimeout(() => {
         window.location.reload();
