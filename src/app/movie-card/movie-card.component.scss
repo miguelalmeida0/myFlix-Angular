@@ -1,7 +1,9 @@
 .movie-card {
   background-color: #511026;
-  background-image: url("https://images.unsplash.com/photo-1608889175250-c3b0c1667d3a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80");
-  background-size: cover;
+  background-image: url("https://images.unsplash.com/photo-1478720568477-152d9b164e26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80");
+  background-size: auto;
+  background-size: 1900px 3500px;
+  background-repeat: no-repeat;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -36,16 +38,45 @@ img {
   text-align: center;
   padding-bottom: 1rem;
   padding-top: 1rem;
+  color: white;
 }
 
 .mat-card {
   margin: 2rem;
   display: grid;
-  background-color: #7c92a1;
+  background-color: #040c18;
   overflow: hidden;
+  border: solid 1px white;
 }
+.mat-card-header[_ngcontent-ioh-c114] {
+  background-color: #0b264e;
+}
+
+.mat-button {
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+  border: 1px solid rgba(27, 27, 27, 0.486);
+  background-color: rgb(72, 63, 105);
+  border-radius: 20px;
+}
+
 .mat-card-header {
   display: grid;
   grid-template-columns: 2fr;
-  background-color: #e6e6e6;
+  background-color: #040c18;
+  padding: 15px;
+}
+
+.mat-button.mat-warn,
+.mat-icon-button.mat-warn,
+.mat-stroked-button.mat-warn {
+  color: #ffebe9;
+}
+
+.mat-button,
+.mat-icon-button,
+.mat-stroked-button,
+.mat-flat-button {
+  margin: 5px;
+  overflow: hidden;
 }
